@@ -17,9 +17,5 @@ manager = Manager(app)
 Migrate(app,db)
 manager.add_command('db',MigrateCommand)
 
-@app.route('/index')
-def index():
-    return 'nihao'
-
 if __name__ == '__main__':
     app.run()
