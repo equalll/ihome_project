@@ -11,6 +11,8 @@ from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
 from ihome import create_app,db
 
+
+
 # 创建 app，并传入配置模式：development / production
 app = create_app("development")
 manager = Manager(app)
