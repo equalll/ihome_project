@@ -10,6 +10,8 @@ from manage import app
 from . import api
 
 
+
 @api.route('/',methods=['GET','POST'])
 def index():
     return 'nihao'
+

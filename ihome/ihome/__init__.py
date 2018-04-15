@@ -15,10 +15,12 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from config import config
-
+from ihome.utils.commons import RegexConverter
 
 
 # 数据库
+
+
 db = SQLAlchemy()
 # redis
 redis_store = None
@@ -49,9 +51,16 @@ def create_app(config_name):
 	# 开启csrf保护
 	csrf.init_app(app)
 
+	# 向app中添加自定义的路由转换器
+	app.url_map.converters['re'] = RegexConverter
+
 	# 注册蓝图
 	import api_1_0  # 注意，蓝图在注册的时候在导入，否则可能会出现循环导入
-	app.register_blueprint(api_1_0.api, url_prefix='/api/v1.0')
+	app.register_blueprint(api_1_0.api, url_prefix='/api/v1.0')  # url_prefix关键字参数（这个参数默认是/）,通过/api/v1.0可以访问到蓝图中定义的视图函数
+
+	# 注册html静态文件蓝图
+	import web_html
+	app.register_blueprint(web_html.html)
 
 	return app
 
