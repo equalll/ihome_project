@@ -6,6 +6,7 @@
 # @File    : __init__.py.py
 # @Software: PyCharm
 
+
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -64,6 +65,7 @@ def create_app(config_name):
 	import web_html
 	app.register_blueprint(web_html.html)
 
+	print app.url_map
 	return app
 
 
