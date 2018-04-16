@@ -5,12 +5,13 @@
 # @Author  : LiGang
 # @File    : config.py
 # @Software: PyCharm
+import logging
 import redis
 
 
 class Config(object):
 	"""工程配置信息"""
-	SECRET_KEY = "lgwjwl"
+	SECRET_KEY = "lgwjwlesfesfsefesfsa"
 
 	DEBUG = True
 
@@ -32,15 +33,18 @@ class Config(object):
 class DevelopmentConfig(Config):
 	"""开发模式下的配置"""
 	DEBUG = True
+	# 开发的时候是DEBUG级别
+	DEBUG_LEVEL = logging.DEBUG
 
 
 class ProductionConfig(Config):
 	"""生产模式下的配置"""
-	pass
+	# 生产环境是ERROR级别
+	DEBUG_LEVEL = logging.ERROR
 
 
 
-config = {
+config_dict = {
 	"development": DevelopmentConfig,
 	"production": ProductionConfig
 }
