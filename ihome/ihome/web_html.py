@@ -27,6 +27,9 @@ html = Blueprint("html",__name__)
 # 使用蓝图装饰视图函数
 @html.route("/<re(r'.*'):file_name>")
 def get_html_page(file_name):
+
+	"""根据用户请求的静态html文件名file_name，提供静态html文件资源"""
+
 	# 判断是否是访问的根路径, 如果是根路径,拼接index.html
 	if not file_name:
 		file_name = "index.html"

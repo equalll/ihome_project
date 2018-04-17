@@ -63,7 +63,7 @@ function sendSMSCode() {
     // TODO: 通过ajax方式向后端接口发送请求，让后端发送短信验证码
     $.ajax({
         url: "/api/v1.0/sms_code",
-        type: "post",
+        type: "POST",
         data: JSON.stringify(params),
         headers: {
             "X-CSRFToken": getCookie("csrf_token")  //获取当前浏览器中cookie中的csrf_token
@@ -72,7 +72,7 @@ function sendSMSCode() {
         success: function (resp) {
             if (resp.errno == "0") {
                 // 代表发送成功
-                var num = 10
+                var num = 60
                 var t = setInterval(function () {
                     if (num == 1) {
                         // 倒计时结束,将当前倒计时给清除掉
