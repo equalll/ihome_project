@@ -17,6 +17,7 @@ function generateUUID() {
 }
 var imageCodeId = ""
 var pre_ImageCodeId = ""
+
 // 生成一个图片验证码的编号，并设置页面中图片验证码img标签的src属性
 function generateImageCode() {
 
@@ -37,6 +38,7 @@ function generateImageCode() {
 function sendSMSCode() {
     // 校验参数，保证输入框有数据填写
     $(".phonecode-a").removeAttr("onclick");
+
     var mobile = $("#mobile").val();
     if (!mobile) {
         $("#mobile-err span").html("请填写正确的手机号！");
@@ -63,7 +65,7 @@ function sendSMSCode() {
     // TODO: 通过ajax方式向后端接口发送请求，让后端发送短信验证码
     $.ajax({
         url: "/api/v1.0/sms_code",
-        type: "POST",
+        type: "post",
         data: JSON.stringify(params),
         headers: {
             "X-CSRFToken": getCookie("csrf_token")  //获取当前浏览器中cookie中的csrf_token
@@ -117,5 +119,65 @@ $(document).ready(function() {
     });
 
     // TODO: 注册的提交(判断参数是否为空)
+    $(".form-register").submit(function (e) {
+        e.preventDefault() //禁止表单的默认事件
 
+        // 取到用户输入的内容
+        var mobile = $("#mobile").val()
+        var phonecode = $("#phonecode").val()
+        var password = $("#password").val()
+        var password2 = $("#password2").val()
+
+        if (!mobile) {
+            $("#mobile-err span").html("请填写正确的手机号！");
+            $("#mobile-err").show();
+            return;
+        }
+        if (!phonecode) {
+            $("#phone-code-err span").html("请填写短信验证码！");
+            $("#phone-code-err").show();
+            return;
+        }
+        if (!password) {
+            $("#password-err span").html("请填写密码!");
+            $("#password-err").show();
+            return;
+        }
+        if (password != password2) {
+            $("#password2-err span").html("两次密码不一致!");
+            $("#password2-err").show();
+            return;
+        }
+		
+        // 参数拼接
+        var params = {
+            "mobile":mobile,
+            "phoneCode":phonecode,
+            "password":password
+        }
+		// 发送请求
+        $.ajax({
+            url:"/api/v1.0/user",
+            type: "post",
+            headers: {
+                "X-CSRFToken": getCookie("csrf_token")
+            },
+            data: JSON.stringify(params),
+            contentType: "application/json",
+            success: function (resp) {
+                if (resp.errno == "0"){
+                    // 直接回到首页
+                    location.href = "/index.html"
+                } else if (resp.errno == "4101") {
+            // 表示用户注册成功，但是用户的登录状态后端未保存，所以跳转到登录页面
+            location.href = "/login.html";
+                }else {
+                    $("#password2-err span").html(resp.errmsg)
+                    $("#password2-err").show()
+                }
+            }
+        })
+    })
 })
+
+

@@ -12,6 +12,7 @@
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from ihome import constants
+from ihome.constants import QINIU_DOMIN_PREFIX
 from . import db
 
 
@@ -36,6 +37,31 @@ class User(BaseModel, db.Model):
     avatar_url = db.Column(db.String(128))  # 用户头像路径
     houses = db.relationship("House", backref="user")  # 用户发布的房屋
     orders = db.relationship("Order", backref="user")  # 用户下的订单
+
+
+    @property
+    def password(self):
+        raise AttributeError("不能读取")
+
+    # 将密码加密处理,然后赋值给password_hash
+    @password.setter
+    def password(self, value):
+        self.password_hash = generate_password_hash(value)
+        # return self.password_hash
+    # 在登录的时候,比对密码
+    def check_password(self, value):
+        # 传入密码, 明文, 返回True表示正确, False表示错误
+        return check_password_hash(self.password_hash, value)
+
+    # 获取到user的基本展示信息
+    def user_to_dict(self):
+        user_dict = {
+            "user_id": self.id,
+            "name": self.name,
+            "mobile":self.mobile,
+            "avatar_url": QINIU_DOMIN_PREFIX + self.avatar_url
+        }
+        return user_dict
 
 
 class Area(BaseModel, db.Model):

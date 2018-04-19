@@ -65,7 +65,7 @@ def create_app(config_name):
 	import web_html
 	app.register_blueprint(web_html.html)
 
-	print app.url_map
+	# print app.url_map
 	return app
 
 
