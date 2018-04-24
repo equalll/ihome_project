@@ -51,7 +51,7 @@ class CCP(object):
         else:
             return -1
 
-#≤‚ ‘
+# ≤‚ ‘
 # print CCP().rest
 # print CCP().rest
 
