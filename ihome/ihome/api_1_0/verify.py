@@ -5,20 +5,14 @@
 # @Author  : LiGang
 # @File    : verify.py
 # @Software: PyCharm
+"""
+# 功能:生成图片验证码, 短信验证码
+"""
 
-# 注册 imagecode 路由
-# 步骤：
-	# 获取参数
-	# 生成验证码
-	# 删除之前验证码并保存当前验证码
-	# 错误处理
-	# 响应返回
 import re
 import random
-
 from flask import current_app
 from flask import json
-
 from ihome.models import User
 from ihome.utils.sms import CCP
 from . import api
@@ -29,6 +23,11 @@ from ihome import constants
 from ihome.utils.response_code import RET
 import logging
 
+
+# 功能描述: 获取图片验证码
+# 请求路径: /api/v1.0/image_code
+# 请求方式:GET
+# 请求参数: 图片验证码编号
 @api.route("/image_code")
 def generate_image_code():
     # 获取到之前的id和当前的id

@@ -5,8 +5,10 @@
 # @Author  : LiGang
 # @File    : passport.py
 # @Software: PyCharm
+"""
+功能:注册,登陆,退出
+"""
 
-#coding:utf-8
 import re
 
 from flask import current_app

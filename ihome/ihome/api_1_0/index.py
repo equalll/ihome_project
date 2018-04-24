@@ -13,5 +13,4 @@ from . import api
 
 @api.route('/',methods=['GET','POST'])
 def index():
-    return 'nihao'
-
+	return '欢迎使用api_v1.0'

@@ -17,7 +17,7 @@ class Config(object):
 
 	# 数据库配置信息
 	SQLALCHEMY_DATABASE_URI = "mysql://root:mysql@127.0.0.1:3306/ihome"
-	SQLALCHEMY_TRACK_MODIFICATIONS = False
+	SQLALCHEMY_TRACK_MODIFICATIONS = False  # Ture和False均可压制警告信息,False可以降低数据库开销
 
 	# Redis配置
 	REDIS_HOST = "127.0.0.1"
